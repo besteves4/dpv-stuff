@@ -1,0 +1,12 @@
+# Associating a Privacy Preference with a DPV policy and metadata
+ex:UserAPrivacyPreference rdf:type dpv-pd:PrivacyPreference ;
+    dct:title "User A Privacy Preference"@en ;
+    dct:creator <https://example.com/userA> ;
+    dct:created "2022-11-16"^^xsd:date ;
+    dpv:hasPolicy [
+        rdf:type dpv:PersonalDataHandling ;
+        dpv:hasPurpose dpv:IdentityVerification ;
+        dpv:hasPersonalData dpv-pd:OfficialID ;
+        dpv:hasProcessing dpv:Use ;
+        dpv:hasLocation <https://example.com/userA/privacyPreferenceA>
+    ] .
