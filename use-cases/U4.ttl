@@ -1,0 +1,5 @@
+# Tag digital resource with having sensitive personal data
+<https://example.com/userA/resourceA> dpv:hasPersonalData dpv:SensitivePersonalData .
+
+# Tag digital resource with containing a specific personal data type
+<https://example.com/userA/resourceA> dpv:hasPersonalData dpv-pd:Location .

@@ -1,0 +1,19 @@
+# Access control policy with DPV
+ex:policy1 a dpv:PersonalDataHandling ;
+    dpv:hasRule dpv:Permission ;
+    dpv:hasPurpose dpv:ServiceProvision ;
+    dpv:hasPersonalData dpv:Email .
+
+# Access control policy with DPV and ODRL
+ex:policy1 a odrl:Policy ;
+    odrl:profile odrl-dpv: ;
+    odrl:uid <https://example.com/policy:1> ;
+    odrl:permission [
+        odrl:action odrl-dpv:Use ;
+        odrl:target odrl-dpv:Email ;
+        odrl:constraint [
+            odrl:leftOperand odrl-dpv:Purpose ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand dpv:ServiceProvision
+        ]
+    ] .
