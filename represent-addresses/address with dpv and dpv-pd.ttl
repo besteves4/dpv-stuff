@@ -1,0 +1,31 @@
+@prefix dpv: <https://www.w3id.org/dpv#> .
+@prefix dpv-pd: <https://www.w3id.org/dpv/dpv-pd> .
+#@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix schema: <http://schema.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+# Single string representing the addresses
+:beatriz dpv:hasAddress :primaryAddress, :vacationAddress .
+:primaryAddress rdf:value "Calle Mayorazgo de Duarte 277, 28052, Madrid, Madrid, España" .
+:vacationAddress rdf:value "Rua João Paulo II, 2560-046, A-dos-Cunhados, Lisboa, Portugal" .
+
+# Express dpv-pd:PhysicalAddress as a subclass of schema:PostalAddress (or other similar one such as vcard:Address) and separate address from address location
+dpv-pd:PhysicalAddress rdfs:subClassOf schema:PostalAddress .
+:beatriz dpv:hasAddress :primaryAddress, :vacationAddress .
+:primaryAddress a dpv-pd:PhysicalAddress ;
+    dpv:hasLocation :primaryAddressLocation .
+:primaryAddressLocation a dpv-pd:Location ;
+    schema:streetAddress [ a dpv-pd:Street ; rdf:value "Calle Mayorazgo de Duarte 277" ] ;
+    schema:postalCode [ a dpv-pd:PostalCode ; rdf:value "28052"] ;
+    schema:addressLocality [ a dpv-pd:Locality ; rdf:value "Madrid" ] ;
+    schema:addressRegion [ a dpv-pd:Region ; rdf:value "Madrid" ] ;
+    schema:addressCountry [ a dpv-pd:Country ; rdf:value "España" ] .
+:vacationAddress a dpv-pd:PhysicalAddress ;
+    dpv:hasLocation :primaryAddressLocation .
+:vacationAddressLocation a dpv-pd:Location ;
+    schema:streetAddress [ a dpv-pd:Street ; rdf:value "Rua João Paulo II" ] ;
+    schema:postalCode [ a dpv-pd:PostalCode ; rdf:value "2560-046"] ;
+    schema:addressLocality [ a dpv-pd:Locality ; rdf:value "A-dos-Cunhados" ] ;
+    schema:addressRegion [ a dpv-pd:Region ; rdf:value "Lisboa" ] ;
+    schema:addressCountry [ a dpv-pd:Country ; rdf:value "Portugal" ] .

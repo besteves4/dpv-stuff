@@ -1,0 +1,45 @@
+:app-1 a odrl:Policy ;
+    odrl:permission [
+        odrl:assignee [ a oac:DataController ] ;
+        odrl:target oac:Financial, oac:Historical ;
+        odrl:action oac:Use ;
+        odrl:constraint [
+            odrl:leftOperand oac:Purpose ;
+            odrl:operator odrl:isAnyOf ;
+            odrl:rightOperand ( dpv:ResearchAndDevelopment, dpv:AccountManagement )
+        ]
+    ] .
+
+Request for Financial and Historical personal data
+    for ResearchAndDevelopment and AccountManagement purposes
+    with read-access mode
+
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX oac: <https://w3id.org/oac/>
+PREFIX dpv: <http://www.w3.org/ns/dpv#> .
+
+CONSTRUCT { ?matchingPolicy rdf:type odrl:Policy ;
+                odrl:permission ?permission .
+            ?permission odrl:target oac:Financial, oac:Historical ;
+                odrl:action oac:Read ;
+                odrl:constraint ?constraint .
+            ?constraint odrl:leftOperand oac:Purpose ;
+                odrl:operator odrl:isAnyOf ;
+                odrl:rightOperand dpv:ResearchAndDevelopment ;
+                odrl:rightOperand dpv:AccountManagement . }
+WHERE   {
+            { ?constraint odrl:rightOperand dpv:ResearchAndDevelopment } UNION { ?constraint odrl:rightOperand dpv:ResearchAndDevelopment }
+        }
+
+SELECT ?matchingPolicy
+WHERE
+  { ?matchingPolicy rdf:type odrl:Policy ;
+        odrl:permission ?permission .
+    ?permission odrl:target oac:Financial ;
+        odrl:target oac:Historical ;
+        odrl:action oac:Read ;
+        odrl:constraint ?constraint .
+    ?constraint odrl:rightOperand dpv:ResearchAndDevelopment ;
+        odrl:rightOperand dpv:AccountManagement .
+  }
