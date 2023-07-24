@@ -1,5 +1,6 @@
 PREFIX dpv: <https://www.w3id.org/dpv#>
-PREFIX dpv-pd: <https://www.w3id.org/dpv/dpv-pd>
+PREFIX dpv-pd: <https://www.w3id.org/dpv/dpv-pd#>
+PREFIX dpv-legal: <https://w3id.org/dpv/dpv-legal#>
 #PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX schema: <http://schema.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -12,6 +13,11 @@ ex:primaryAddress rdf:value "Calle Mayorazgo de Duarte 277, 28052, Madrid, Madri
 ex:vacationAddress rdf:value "Rua João Paulo II, 2560-046, A-dos-Cunhados, Lisboa, Portugal" .
 
 # Express dpv-pd:PhysicalAddress as a subclass of schema:PostalAddress (or other similar one such as vcard:Address) and separate address from address location
+# Also these classes would need to be added to DPV-PD
+# add dpv-pd:Street
+# add dpv-pd:PostalCode
+# add dpv-pd:Locality
+# add dpv-pd:Region
 dpv-pd:PhysicalAddress rdfs:subClassOf schema:PostalAddress .
 ex:beatriz dpv:hasAddress ex:primaryAddress, ex:vacationAddress .
 ex:primaryAddress a dpv-pd:PhysicalAddress ;
@@ -30,3 +36,27 @@ ex:vacationAddressLocation a dpv-pd:Location ;
     schema:addressLocality [ a dpv-pd:Locality ; rdf:value "A-dos-Cunhados" ] ;
     schema:addressRegion [ a dpv-pd:Region ; rdf:value "Lisboa" ] ;
     schema:addressCountry [ a dpv-pd:Country ; rdf:value "Portugal" ] .
+
+# Don't use schema.org at all if we can add a few new properties to DPV-PD:
+# add dpv-pd:hasStreet
+# add dpv-pd:hasPostalCode
+# add dpv-pd:hasLocality
+# add dpv-pd:hasRegion
+# add dpv-pd:hasCountry
+ex:beatriz dpv:hasAddress ex:primaryAddress, ex:vacationAddress .
+ex:primaryAddress a dpv-pd:PhysicalAddress ;
+    dpv:hasLocation ex:primaryAddressLocation .
+ex:primaryAddressLocation a dpv-pd:Location ;
+    dpv-pd:hasStreet [ a dpv-pd:Street ; rdf:value "Calle Mayorazgo de Duarte 277" ] ;
+    dpv-pd:hasPostalCode [ a dpv-pd:PostalCode ; rdf:value "28052"] ;
+    dpv-pd:hasLocality [ a dpv-pd:Locality ; rdf:value "Madrid" ] ;
+    dpv-pd:hasRegion [ a dpv-pd:Region ; rdf:value "Madrid" ] ;
+    dpv-pd:hasCountry dpv-legal:ES .
+ex:vacationAddress a dpv-pd:PhysicalAddress ;
+    dpv:hasLocation ex:primaryAddressLocation .
+ex:vacationAddressLocation a dpv-pd:Location ;
+    dpv-pd:hasStreet [ a dpv-pd:Street ; rdf:value "Rua João Paulo II" ] ;
+    dpv-pd:hasPostalCode [ a dpv-pd:PostalCode ; rdf:value "2560-046"] ;
+    dpv-pd:hasLocality [ a dpv-pd:Locality ; rdf:value "A-dos-Cunhados" ] ;
+    dpv-pd:hasRegion [ a dpv-pd:Region ; rdf:value "Lisboa" ] ;
+    dpv-pd:hasCountry dpv-legal:PT .
